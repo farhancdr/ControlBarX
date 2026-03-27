@@ -33,20 +33,27 @@ A macOS menu bar utility that puts system monitoring and keyboard control tools 
 
 ## Installation
 
+### Quick Install
+
+Paste this in your terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/farhancdr/ControlBarX/main/install.sh | bash
+```
+
+Then grant Accessibility permission:
+1. Go to **System Settings > Privacy & Security > Accessibility**
+2. Toggle **ControlBarX** on
+
 ### Manual Install
 
 1. Download `ControlBarX.dmg` from [Releases](../../releases/latest)
 2. Open the DMG and drag **ControlBarX** to **Applications**
-3. **Important:** Remove the macOS quarantine flag before launching:
+3. Remove the macOS quarantine flag:
    ```bash
    xattr -cr /Applications/ControlBarX.app
    ```
-   This is required because the app is ad-hoc signed, not notarized with Apple. You only need to do this once.
-4. Launch the app
-5. Grant Accessibility permission when prompted:
-   - Go to **System Settings > Privacy & Security > Accessibility**
-   - Toggle **ControlBarX** on
-6. Click the bolt icon in the menu bar to open the panel
+4. Launch the app and grant Accessibility permission
 
 ## Building from Source
 
