@@ -6,7 +6,7 @@ A macOS menu bar utility that puts system monitoring and keyboard control tools 
 
 ### Keyboard Blocker
 - Toggle switch to block all keyboard input system-wide
-- **ESC key passthrough** — configurable toggle (on by default) to prevent lockout
+- **ESC key passthrough** — always allowed to prevent lockout
 - **Auto-disable timer** — block keyboard for 1, 5, 15, or 30 minutes with countdown and progress bar
 - Useful for cleaning your keyboard, preventing accidental input, or keeping cats off your keys
 

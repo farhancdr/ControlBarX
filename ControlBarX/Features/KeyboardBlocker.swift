@@ -5,8 +5,6 @@ import Observation
 @Observable
 final class KeyboardBlocker {
     var isEnabled = false
-    var allowEscape = true
-
     fileprivate var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
 
@@ -141,7 +139,8 @@ private func keyboardCallback(
 
     let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
 
-    if keyCode == 53 && blocker.allowEscape {
+    // Always allow ESC to prevent lockout
+    if keyCode == 53 {
         return Unmanaged.passRetained(event)
     }
 

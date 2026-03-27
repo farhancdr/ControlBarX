@@ -46,12 +46,6 @@ struct KeyboardSection: View {
                     .toggleStyle(.switch)
                     .tint(.red)
 
-                    // Allow ESC
-                    Toggle(isOn: $blocker.allowEscape) {
-                        Label("Allow ESC Key", systemImage: "escape")
-                    }
-                    .toggleStyle(.switch)
-
                     // Timer
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Auto-disable")
