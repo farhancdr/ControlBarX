@@ -13,6 +13,10 @@ struct ControlBarXApp: App {
                 networkMonitor: networkMonitor,
                 systemMonitor: systemMonitor
             )
+            .onAppear {
+                if !networkMonitor.isMonitoring { networkMonitor.start() }
+                if !systemMonitor.isMonitoring { systemMonitor.start() }
+            }
         }
         .menuBarExtraStyle(.window)
     }

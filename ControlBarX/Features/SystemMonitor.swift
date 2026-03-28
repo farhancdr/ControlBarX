@@ -122,11 +122,10 @@ final class SystemMonitor {
 
         let pageSize = UInt64(vm_kernel_page_size)
         let active = UInt64(stats.active_count) * pageSize
-        let inactive = UInt64(stats.inactive_count) * pageSize
         let wired = UInt64(stats.wire_count) * pageSize
         let compressed = UInt64(stats.compressor_page_count) * pageSize
 
-        let used = active + wired + compressed + inactive
+        let used = active + wired + compressed
 
         return (used, total)
     }

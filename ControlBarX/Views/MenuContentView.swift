@@ -10,34 +10,70 @@ struct MenuContentView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HStack(spacing: 10) {
-                Image(systemName: "bolt.fill")
-                    .font(.title2)
-                    .foregroundStyle(.yellow)
-                Text("ControlBarX")
-                    .font(.headline)
+            // Keyboard Blocker
+            HStack {
+                Image(systemName: "keyboard")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 20)
+                Text("Block Keyboard")
+                    .font(.subheadline)
                 Spacer()
-                Text("v1.0")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                Toggle("", isOn: Binding(
+                    get: { keyboardBlocker.isEnabled },
+                    set: { _ in keyboardBlocker.toggle() }
+                ))
+                .toggleStyle(.switch)
+                .controlSize(.small)
+                .tint(.red)
             }
             .padding(.horizontal, 16)
-            .padding(.top, 14)
-            .padding(.bottom, 10)
+            .padding(.vertical, 10)
 
-            Divider()
+            Divider().padding(.horizontal, 16)
 
-            ScrollView {
-                VStack(spacing: 0) {
-                    KeyboardSection(blocker: $keyboardBlocker)
-                    Divider().padding(.horizontal, 16)
-                    NetworkSection(monitor: networkMonitor)
-                    Divider().padding(.horizontal, 16)
-                    SystemSection(monitor: systemMonitor)
-                }
+            // Network Speed
+            HStack {
+                Image(systemName: "network")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 20)
+                Text("↓")
+                    .foregroundStyle(.blue)
+                Text(NetworkMonitor.formatSpeed(networkMonitor.downloadSpeed))
+                    .font(.subheadline.monospaced())
+                Text("/")
+                    .foregroundStyle(.tertiary)
+                Text(NetworkMonitor.formatSpeed(networkMonitor.uploadSpeed))
+                    .font(.subheadline.monospaced())
+                Text("↑")
+                    .foregroundStyle(.orange)
+                Spacer()
             }
-            .frame(maxHeight: 400)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+
+            Divider().padding(.horizontal, 16)
+
+            // System Stats
+            HStack {
+                Image(systemName: "cpu")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 20)
+                Text("RAM")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text("\(SystemMonitor.formatBytes(systemMonitor.memoryUsed)) / \(SystemMonitor.formatBytes(systemMonitor.memoryTotal))")
+                    .font(.subheadline.monospaced())
+                    .foregroundStyle(systemMonitor.memoryUsagePercent > 85 ? .red : systemMonitor.memoryUsagePercent > 65 ? .orange : .primary)
+                Spacer()
+                Text("CPU")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(String(format: "%.0f%%", systemMonitor.cpuUsage))
+                    .font(.subheadline.monospaced())
+                    .foregroundStyle(systemMonitor.cpuUsage > 80 ? .red : systemMonitor.cpuUsage > 50 ? .orange : .primary)
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
 
             Divider()
 
@@ -73,6 +109,6 @@ struct MenuContentView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
         }
-        .frame(width: 300)
+        .frame(width: 280)
     }
 }

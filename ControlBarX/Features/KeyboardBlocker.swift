@@ -8,58 +8,12 @@ final class KeyboardBlocker {
     fileprivate var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
 
-    // Auto-disable timer
-    var timerActive = false
-    var timerMinutes: Int = 0
-    var remainingSeconds: Int = 0
-    private var timer: Timer?
-
     func toggle() {
         if isEnabled {
             disable()
         } else {
             enable()
         }
-    }
-
-    func startTimer(minutes: Int) {
-        cancelTimer()
-        if !isEnabled { enable() }
-
-        timerMinutes = minutes
-        remainingSeconds = minutes * 60
-        timerActive = true
-
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-            DispatchQueue.main.async {
-                guard let self else { return }
-                if self.remainingSeconds > 0 {
-                    self.remainingSeconds -= 1
-                } else {
-                    self.disable()
-                    self.cancelTimer()
-                }
-            }
-        }
-    }
-
-    func cancelTimer() {
-        timer?.invalidate()
-        timer = nil
-        timerActive = false
-        timerMinutes = 0
-        remainingSeconds = 0
-    }
-
-    var timerProgress: Double {
-        guard timerMinutes > 0 else { return 0 }
-        return 1.0 - (Double(remainingSeconds) / Double(timerMinutes * 60))
-    }
-
-    var formattedRemaining: String {
-        let m = remainingSeconds / 60
-        let s = remainingSeconds % 60
-        return String(format: "%d:%02d", m, s)
     }
 
     private func enable() {
@@ -106,7 +60,6 @@ final class KeyboardBlocker {
     }
 
     deinit {
-        cancelTimer()
         disable()
     }
 }
